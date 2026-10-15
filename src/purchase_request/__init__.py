@@ -1,0 +1,1 @@
+"""Synthetic purchase request agent."""

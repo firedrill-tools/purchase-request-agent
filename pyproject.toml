@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "purchase-request-agent"
+version = "0.1.0"
+description = "CrewAI procurement comparison with approval and quote revision gates"
+requires-python = ">=3.12"
+dependencies = ["crewai==1.15.28"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/purchase_request"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "version": 1,
+  "requests": [
+    { "id": "PR-101", "sku": "MON-24", "description": "Twenty 24-inch office monitors", "quantity": 20, "budget_cents": 40000, "status": "open", "revision": 1 }
+  ],
+  "quotes": [
+    { "id": "Q-201", "supplier": "Harbor Devices", "sku": "MON-24", "unit_cents": 1400, "stock": 30, "revision": 1 },
+    { "id": "Q-202", "supplier": "Metro Tech", "sku": "MON-24", "unit_cents": 1200, "stock": 15, "revision": 1 },
+    { "id": "Q-203", "supplier": "Northstar Supply", "sku": "MON-24", "unit_cents": 1500, "stock": 50, "revision": 1 },
+    { "id": "Q-204", "supplier": "Premium Screens", "sku": "MON-24", "unit_cents": 2500, "stock": 40, "revision": 1 }
+  ],
+  "proposals": [],
+  "orders": [],
+  "audit": []
+}
