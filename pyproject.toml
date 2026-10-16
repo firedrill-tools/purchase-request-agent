@@ -7,7 +7,7 @@ name = "purchase-request-agent"
 version = "0.1.0"
 description = "CrewAI procurement comparison with approval and quote revision gates"
 requires-python = ">=3.12"
-dependencies = ["crewai==1.15.28"]
+dependencies = ["crewai==1.15.28", "openai==2.54.0", "httpx==0.28.1", "pydantic==2.12.5"]
 
 [project.optional-dependencies]
 test = ["pytest>=8,<10"]

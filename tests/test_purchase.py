@@ -24,11 +24,17 @@ def test_cheapest_eligible_quote_and_approval_gate(tmp_path):
     store = setup(tmp_path)
     assert store.propose("PR-101", "Q-202", 1200, 1)["error"] == "insufficient_stock"
     assert store.propose("PR-101", "Q-204", 2500, 1)["error"] == "over_budget"
-    assert store.propose("PR-101", "Q-203", 1500, 1)["error"] == "better_eligible_quote_exists"
+    assert (
+        store.propose("PR-101", "Q-203", 1500, 1)["error"]
+        == "better_eligible_quote_exists"
+    )
     result = propose(store)
     assert result["ok"] and result["proposal"]["total_cents"] == 28000
     assert store.commit("PROP-1")["error"] == "approval_required"
-    assert store.decide("PROP-1", "Agent", "approved")["error"] == "approver_not_authorized"
+    assert (
+        store.decide("PROP-1", "Agent", "approved")["error"]
+        == "approver_not_authorized"
+    )
     assert store.decide("PROP-1", "Ava Chen", "approved")["ok"]
     assert store.commit("PROP-1")["order"]["id"] == "PO-1"
     assert store.commit("PROP-1")["error"] == "already_ordered"
@@ -42,6 +48,7 @@ def test_changed_price_and_stock_block_after_approval(tmp_path):
     store.update_quote("Q-201", unit_cents=1600)
     assert store.commit("PROP-1")["error"] == "quote_changed"
     assert store.read()["orders"] == []
+
 
 def test_stock_change_blocks_and_rejection_sticks(tmp_path):
     stock_dir = tmp_path / "stock"
@@ -67,10 +74,19 @@ class StubLLM(BaseLLM):
         super().__init__(model="synthetic-purchase-stub", temperature=0)
         self.calls = []
 
-    def call(self, messages, tools=None, callbacks=None, available_functions=None, **kwargs):
+    def call(
+        self, messages, tools=None, callbacks=None, available_functions=None, **kwargs
+    ):
         self.calls.append(messages)
-        return json.dumps({"request_id": "PR-101", "quote_id": "Q-201", "expected_unit_cents": 1400,
-                           "expected_quote_revision": 1, "reason": "Lowest eligible quote"})
+        return json.dumps(
+            {
+                "request_id": "PR-101",
+                "quote_id": "Q-201",
+                "expected_unit_cents": 1400,
+                "expected_quote_revision": 1,
+                "reason": "Lowest eligible quote",
+            }
+        )
 
     def supports_function_calling(self):
         return False
@@ -80,7 +96,11 @@ def test_actual_three_role_crew_creates_proposal_not_order(tmp_path):
     store = setup(tmp_path)
     llm = StubLLM()
     crew = build_crew(store.context("PR-101"), llm)
-    assert [agent.role for agent in crew.agents] == ["Supplier quote analyst", "Inventory and budget checker", "Purchase proposal drafter"]
+    assert [agent.role for agent in crew.agents] == [
+        "Supplier quote analyst",
+        "Inventory and budget checker",
+        "Purchase proposal drafter",
+    ]
     result = run_team(store, "PR-101", llm)
     assert result["ok"]
     assert len(llm.calls) >= 3
