@@ -108,6 +108,13 @@ class Audit(Strict):
     outcome: Literal["success", "approved", "rejected"]
 
 
+class Dataset(Strict):
+    id: Literal["purchase-populations"]
+    version: Literal["1.0.0"]
+    case_id: Identifier
+    source_sha256: Annotated[str, StringConstraints(pattern=r"^[a-f0-9]{64}$")]
+
+
 class State(Strict):
     @model_validator(mode="before")
     @classmethod
@@ -122,7 +129,16 @@ class State(Strict):
 
     synthetic: Literal[True]
     version: Literal[1]
-    instance_id: str | None = None
+    instance_id: (
+        Annotated[
+            str,
+            StringConstraints(
+                pattern=r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            ),
+        ]
+        | None
+    ) = None
+    dataset: Dataset | None = None
     requests: Annotated[list[Request], Field(min_length=1, max_length=256)]
     quotes: Annotated[list[Quote], Field(min_length=1, max_length=1024)]
     proposals: Annotated[list[Proposal], Field(max_length=1024)]

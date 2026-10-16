@@ -5,3 +5,6 @@ __pycache__/
 run-output/
 .env
 .DS_Store
+dist/
+runs/
+.ruff_cache/

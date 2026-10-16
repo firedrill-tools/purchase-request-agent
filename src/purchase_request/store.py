@@ -48,11 +48,12 @@ def _source(path):
             or before.st_size != len(raw)
         ):
             raise ValueError("state changed during read")
-        return (
-            validate_state(strict_json(raw.decode("utf-8"))),
-            raw,
-            (before.st_dev, before.st_ino),
-        )
+        state = validate_state(strict_json(raw.decode("utf-8")))
+        if state.get("dataset"):
+            from .datasets import authority
+
+            authority(path, state)
+        return state, raw, (before.st_dev, before.st_ino)
     finally:
         os.close(fd)
 
@@ -250,9 +251,9 @@ class Store:
                 or proposal["approval"] != "pending"
             ):
                 return {"ok": False, "error": "invalid_decision"}
-            if canonical(_context(state, proposal["request_id"])) != canonical(
-                proposal["source"]
-            ):
+            if decision == "approved" and canonical(
+                _context(state, proposal["request_id"])
+            ) != canonical(proposal["source"]):
                 return {"ok": False, "error": "reviewed_source_changed"}
             proposal["approval"] = decision
             proposal["approver"] = approver

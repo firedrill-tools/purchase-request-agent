@@ -68,9 +68,21 @@ def cli() -> int:
     )
     parser.add_argument(
         "command",
-        choices=["init", "context", "recommend", "decide", "commit", "update-quote"],
+        choices=[
+            "datasets",
+            "init",
+            "workspace",
+            "reset",
+            "context",
+            "recommend",
+            "decide",
+            "commit",
+            "update-quote",
+        ],
     )
-    parser.add_argument("--state", required=True)
+    parser.add_argument("--state")
+    parser.add_argument("--case", default="original-quotes")
+    parser.add_argument("--destination")
     parser.add_argument("--request", default="PR-101")
     parser.add_argument("--proposal")
     parser.add_argument("--quote")
@@ -86,35 +98,44 @@ def cli() -> int:
     parser.add_argument("--timeout-seconds", type=float, default=120)
     parser.add_argument("--output-root")
     args = parser.parse_args()
-    state_path = Path(args.state)
-    if args.command == "init":
-        source = Path(__file__).parents[2] / "fixtures" / "starter.json"
-        if not source.exists():
-            source = Path(__file__).parent / "original_data" / "starter.json"
-        state = Store(source).read()
-        state["instance_id"] = str(uuid.uuid4())
-        state_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-        try:
-            fd = os.open(state_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
-            with os.fdopen(fd, "w") as stream:
-                json.dump(state, stream, indent=2)
-                stream.write("\n")
-                stream.flush()
-                os.fsync(stream.fileno())
-        except FileExistsError:
-            parser.error("state already exists")
+    from .datasets import populations, initialize, workspace_info, reset
+
+    if args.command == "datasets":
         print(
             json.dumps(
-                {
-                    "state": str(state_path),
-                    "instance_id": state["instance_id"],
-                    "requests": len(state["requests"]),
-                }
+                [
+                    {
+                        "id": p["id"],
+                        "profile": p["profile"],
+                        "request_id": p["request_id"],
+                        "task": p["task"],
+                        "requests": len(p["state"]["requests"]),
+                        "quotes": len(p["state"]["quotes"]),
+                    }
+                    for p in populations()
+                ],
+                indent=2,
             )
         )
         return 0
+    if not args.state:
+        parser.error("--state is required")
+    state_path = Path(args.state)
+    if args.command == "init":
+        try:
+            result = initialize(state_path, args.case)
+        except FileExistsError:
+            parser.error("state already exists")
+        print(json.dumps(result))
+        return 0
     store = Store(state_path)
-    if args.command == "context":
+    if args.command == "workspace":
+        result = workspace_info(state_path, store.read())
+    elif args.command == "reset":
+        if not args.destination:
+            parser.error("reset needs --destination")
+        result = reset(state_path, args.destination, store.read())
+    elif args.command == "context":
         result = store.context(args.request)
     elif args.command == "recommend":
         if not args.live:

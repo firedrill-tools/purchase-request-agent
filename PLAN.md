@@ -13,4 +13,6 @@ At57bed8ec423e320d5a96990d426e17dcc16f74f5 the original4 tests pass. Commit acce
 4. Fresh locked wheel/sdist/complete-source distribution, installed CLI/API/native checks, all cases and full suite, exact-head source/Linux/artifact/catalog proof.
 
 ## Current task
-Tasks1/2 implemented locally:53 source/transaction/three-role native HTTP/normal CLI/signal/receipt/cleanup checks. Exact source/Linux CI checkpoint next. Tasks3/4 remain active. Overall portfolio goal stays active; continue remaining Wave3 after independent completion.
+Tasks1/2 checkpoint98204b5 passed53 local checks. Its Linux run38907305609 was canceled after an actual test wait bug was reproduced: a cold start can expire the operation before HTTP entry while the test awaits entry without a bound (/tmp/firedrill-purchase-deadline-wait-baseline.json). The fixed test uses a sufficient startup budget and bounded race against operation settlement. No paid/provider dependency caused the wait.
+
+Tasks3/4 are implemented:12 coherent hash-bound populations/four profiles, busy20requests/80quotes/4imported orders, private exclusive key-free init/readback/reset, exact seed/current distinction, all-case actual native SDK and separate human decision/order. Final81 includes stale-source rejection preserving original human-stop behavior. Fresh locked wheel/sdist/complete-source qualification and final source/Linux/artifact/catalog gates are active. All external gates remain parked. Overall portfolio goal stays active; continue remaining Wave3 after independent completion.

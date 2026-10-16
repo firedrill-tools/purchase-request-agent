@@ -182,3 +182,14 @@ def test_independent_processes_commit_an_approved_order_only_once(tmp_path):
     assert sum(r["ok"] for r in results) == 1
     assert len(store.read()["orders"]) == 1
     assert store.read()["quotes"][0]["stock"] == 10
+
+
+def test_human_can_reject_a_stale_proposal_without_reauthorizing_changed_facts(
+    tmp_path,
+):
+    store = setup(tmp_path)
+    assert store.propose("PR-101", "Q-201", 1400, 1)["ok"]
+    store.update_quote("Q-201", unit_cents=1600)
+    assert store.decide("PROP-1", "Ava Chen", "rejected")["ok"]
+    assert store.commit("PROP-1")["error"] == "approval_required"
+    assert store.read()["orders"] == []

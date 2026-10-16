@@ -308,10 +308,20 @@ def test_pending_native_work_drains_on_cancel_or_deadline(tmp_path, kind):
     async def check():
         store = setup(tmp_path)
         clients = transports(buyer={"wait": asyncio.Event()})
-        task = asyncio.create_task(
-            run(store, clients, timeout_seconds=0.2 if kind == "deadline" else 5)
+        task = asyncio.create_task(run(store, clients, timeout_seconds=5))
+        entered = asyncio.create_task(clients["buyer"].started.wait())
+        done, pending = await asyncio.wait(
+            {task, entered}, timeout=8, return_when=asyncio.FIRST_COMPLETED
         )
-        await clients["buyer"].started.wait()
+        if not clients["buyer"].started.is_set():
+            entered.cancel()
+            await asyncio.gather(entered, return_exceptions=True)
+            if not task.done():
+                task.cancel()
+            await asyncio.gather(task, return_exceptions=True)
+            pytest.fail(
+                "native operation settled or stalled before controlled HTTP entry"
+            )
         if kind == "cancel":
             task.cancel()
         with pytest.raises(BaseException) as error:

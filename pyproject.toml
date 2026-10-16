@@ -4,7 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "purchase-request-agent"
-version = "0.1.0"
+version = "0.2.0"
+readme = "README.md"
 description = "CrewAI procurement comparison with approval and quote revision gates"
 requires-python = ">=3.12"
 dependencies = ["crewai==1.15.28", "openai==2.54.0", "httpx==0.28.1", "pydantic==2.12.5"]
@@ -17,3 +18,13 @@ packages = ["src/purchase_request"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[project.scripts]
+purchase-request = "purchase_request.__main__:main"
+
+[tool.hatch.build.targets.wheel.force-include]
+"data" = "purchase_request/sample_data"
+"fixtures/starter.json" = "purchase_request/original_data/starter.json"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "data", "fixtures", "tests", "scripts", "scenarios", ".github", "README.md", "AGENTS.md", "PLAN.md", "COMPATIBILITY.md", "pyproject.toml", "uv.lock", ".gitignore", ".env.example"]
