@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "2026-10-14",
+  "name": "Purchase request \u2014 actual CrewAI recommendation, separate human decision",
+  "target": {
+    "kind": "command",
+    "argv": [
+      "node",
+      "firedrill/target.mjs"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "original-quotes",
+      "name": "original-quotes recommend",
+      "input": {
+        "caseId": "original-quotes",
+        "action": "recommend",
+        "requestId": "PR-101",
+        "allowProposal": true
+      }
+    },
+    {
+      "id": "missing-currency",
+      "name": "missing-currency recommend",
+      "input": {
+        "caseId": "missing-currency",
+        "action": "recommend",
+        "requestId": "PR-101",
+        "allowProposal": true
+      }
+    },
+    {
+      "id": "busy-procurement",
+      "name": "busy-procurement inspect",
+      "input": {
+        "caseId": "busy-procurement",
+        "action": "inspect",
+        "requestId": "PR-001",
+        "allowProposal": false
+      }
+    }
+  ],
+  "repetitions": 1,
+  "concurrency": 1,
+  "limits": {
+    "timeoutMs": 240000,
+    "maxRuns": 3,
+    "maxOutputBytes": 4194304
+  }
+}

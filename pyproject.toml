@@ -27,4 +27,4 @@ purchase-request = "purchase_request.__main__:main"
 "fixtures/starter.json" = "purchase_request/original_data/starter.json"
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "data", "fixtures", "tests", "scripts", "scenarios", ".github", "README.md", "AGENTS.md", "PLAN.md", "COMPATIBILITY.md", "pyproject.toml", "uv.lock", ".gitignore", ".env.example"]
+include = ["firedrill", "src", "data", "fixtures", "tests", "scripts", "scenarios", ".github", "README.md", "AGENTS.md", "PLAN.md", "COMPATIBILITY.md", "pyproject.toml", "uv.lock", ".gitignore", ".env.example"]

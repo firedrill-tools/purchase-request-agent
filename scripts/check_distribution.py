@@ -210,6 +210,9 @@ def main():
             ],
             temp,
         )
+        assert (source / 'firedrill/scenario.json').exists() and not (source / 'firedrill/node_modules').exists()
+        run(['npm', 'ci', '--prefix', 'firedrill', '--ignore-scripts', '--no-audit', '--no-fund'], source)
+        run(['npm', 'test', '--prefix', 'firedrill'], source)
         exercise(source / ".venv/bin/python", temp / "sdist-case")
         run(
             [source / ".venv/bin/python", "scripts/build_datasets.py", "--check"],
@@ -230,6 +233,9 @@ def main():
             ],
             temp,
         )
+        assert (complete / 'firedrill/scenario.json').exists() and not (complete / 'firedrill/node_modules').exists()
+        run(['npm', 'ci', '--prefix', 'firedrill', '--ignore-scripts', '--no-audit', '--no-fund'], complete)
+        run(['npm', 'test', '--prefix', 'firedrill'], complete)
         exercise(complete / ".venv/bin/python", temp / "complete-case")
         run(
             [complete / ".venv/bin/python", "scripts/build_datasets.py", "--check"],

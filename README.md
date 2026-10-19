@@ -62,3 +62,7 @@ Initialization exclusively creates private state/source metadata; readback disti
 Fresh locked wheel, sdist and complete-source installs outside checkout qualify console/module CLI, every case/readback/reset, real installed three-role native CLI followed by a separate local human decision/order, missing-key failure and default key-free plan. The complete archived suite has 81 checks; original delivered hashes stay unchanged and repeated source bytes agree. The archive includes code/data/original fixture/tests/scripts/scenarios/docs/CI/lockfiles plus exact SHA256/size/mode manifest, excluding private state, Git and installed caches. CI retains source and qualification.json; exact source/CI/artifact proof is recorded in the portfolio catalog. See COMPATIBILITY.md for evidence limits.
 
 No paid provider or real supplier/order/payment action was used. Live semantics/billing, qualified new Firedrill and publication/license remain parked. Those external gates do not block the independent source and distribution work.
+
+## Current Firedrill integration
+
+Released CLI/SDK 2.2.2, current command invocation, remote operator MCP and recovery are documented in [firedrill/README.md](firedrill/README.md). Offline checks preserve actual context/native key behavior and independent proposal permission; human decisions, authenticated persisted runs and live quality/cost remain separate.
