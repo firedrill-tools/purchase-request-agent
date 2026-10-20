@@ -2,6 +2,8 @@
 
 A three-role CrewAI workflow compares supplier quotes for a synthetic purchase request, checks stock and budget, and drafts a proposal for a named human decision. The model cannot approve or place an order. A deterministic store checks the recommendation against current quotes and requires explicit approval before a local purchase order is recorded.
 
+This example repository is publicly viewable. A project license has not been selected.
+
 ## Simulate with Firedrill
 
 [Firedrill](https://firedrill.run/) is a simulation platform for AI agents.
@@ -42,7 +44,7 @@ uv run python -m purchase_request commit --state run-output/purchase.json --prop
 
 The named approver is a synthetic fixture identity, not real authentication. `commit` rechecks the request, quote revision, unit price, available stock, total, and approval. It decreases synthetic stock and records a single local order. Use `update-quote --quote Q-201 --unit-cents 1600` or `--stock 5` between proposal and commit to exercise changed conditions. No real supplier service or payment rail is used. Cooperating processes serialize complete read/recheck/atomic replacement with a persistent SQLite mutex. New initialized state has an instance ID that fences stale owners. Reset materializes the original case into a fresh destination and leaves old state/evidence intact. Uncooperative filesystem writers and arbitrary hostile processes are outside an OS security boundary.
 
-The fixture contains an eligible lower-cost quote, a cheaper quote with insufficient stock, an eligible but more expensive quote, and an over-budget quote. The actual three-role CrewAI/OpenAI HTTP path and separately labeled local stub path are qualified. Strict per-role recommendations and exact buyer/checker/drafter handoffs precede proposal creation. Controlled responses verify transport and deterministic boundaries; they do not establish live model quality. Live provider proof and authenticated persisted Firedrill runs remain pending. The private repository has no license pending publication decisions.
+The fixture contains an eligible lower-cost quote, a cheaper quote with insufficient stock, an eligible but more expensive quote, and an over-budget quote. The actual three-role CrewAI/OpenAI HTTP path and separately labeled local stub path are qualified. Strict per-role recommendations and exact buyer/checker/drafter handoffs precede proposal creation. Controlled responses verify transport and deterministic boundaries; they do not establish live model quality. Live provider proof and authenticated persisted Firedrill runs remain pending. This repository is publicly viewable; no project license has been selected.
 
 Explore related applications in the [Firedrill example catalog](https://github.com/firedrill-tools/firedrill-example-catalog). Product and setup references: [Firedrill](https://firedrill.run/) and the [official developer documentation](https://docs.firedrill.run/). Use documentation matching the qualified release; this repository records its current integration limits above.
 
@@ -75,7 +77,7 @@ Initialization exclusively creates private state/source metadata; readback disti
 
 Fresh locked wheel, sdist and complete-source installs outside checkout qualify console/module CLI, every case/readback/reset, real installed three-role native CLI followed by a separate local human decision/order, missing-key failure and default key-free plan. The complete archived suite has 81 checks; original delivered hashes stay unchanged and repeated source bytes agree. The archive includes code/data/original fixture/tests/scripts/scenarios/docs/CI/lockfiles plus exact SHA256/size/mode manifest, excluding private state, Git and installed caches. CI retains source and qualification.json; exact source/CI/artifact proof is recorded in the portfolio catalog. See COMPATIBILITY.md for evidence limits.
 
-No paid provider or real supplier/order/payment action was used. Live semantics/billing, authenticated persisted Firedrill runs and publication/license remain parked. Those external gates do not block the independent source and distribution work.
+No paid provider or real supplier/order/payment action was used. Live semantics/billing, authenticated persisted Firedrill runs and license remain parked. Those external gates do not block the independent source and distribution work.
 
 ## Current Firedrill integration
 
