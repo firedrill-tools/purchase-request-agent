@@ -46,7 +46,7 @@ The named approver is a synthetic fixture identity, not real authentication. `co
 
 The fixture contains an eligible lower-cost quote, a cheaper quote with insufficient stock, an eligible but more expensive quote, and an over-budget quote. The actual three-role CrewAI/OpenAI HTTP path and separately labeled local stub path are qualified. Strict per-role recommendations and exact buyer/checker/drafter handoffs precede proposal creation. Controlled responses verify transport and deterministic boundaries; they do not establish live model quality. Live provider proof and authenticated persisted Firedrill runs remain pending. This repository is publicly viewable; no project license has been selected.
 
-Explore related applications in the [Firedrill example catalog](https://github.com/firedrill-tools/firedrill-example-catalog). Product and setup references: [Firedrill](https://firedrill.run/) and the [official developer documentation](https://docs.firedrill.run/). Use documentation matching the qualified release; this repository records its current integration limits above.
+Explore related applications in the [Firedrill examples](https://docs.firedrill.run/guides/examples). Product and setup references: [Firedrill](https://firedrill.run/) and the [official developer documentation](https://docs.firedrill.run/). Use documentation matching the qualified release; this repository records its current integration limits above.
 
 
 ## Current source and native qualification
